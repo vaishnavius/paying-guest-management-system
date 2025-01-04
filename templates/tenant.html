@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant Dashboard</title>
+    <style>
+        /* Existing styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://cdn.britannica.com/82/156482-131-AEEBFEFC/New-York-York.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #fff;
+        }
+        .dashboard-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.7); 
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: rgba(12, 12, 12, 0.8);
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        li label {
+            font-size: 18px;
+        }
+        li input {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid black;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: white;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* New styles for search features */
+        .search-container {
+            background-color: rgba(12, 12, 12, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .search-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .search-group {
+            flex: 1;
+        }
+        .search-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: white;
+        }
+        .search-group select,
+        .search-group input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid black;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: black;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Welcome, {{ tenant_name }}</h1>
+        
+        <div class="search-container">
+            <div class="search-row">
+                <div class="search-group">
+                    <label for="roomType">Room Type:</label>
+                    <select id="roomType" onchange="filterRooms()">
+                        <option value="">All Types</option>
+                        <option value="single">Single</option>
+                        <option value="double">Double</option>
+                        <option value="suite">Suite</option>
+                    </select>
+                </div>
+                <div class="search-group">
+                    <label for="maxPrice">Max Price:</label>
+                    <input type="number" id="maxPrice" placeholder="Enter maximum price" onchange="filterRooms()">
+                </div>
+            </div>
+            <div class="search-row">
+                <div class="search-group">
+                    <label for="facilities">Search Facilities:</label>
+                    <input type="text" id="facilities" placeholder="Search facilities (e.g., wifi, tv)" oninput="filterRooms()">
+                </div>
+            </div>
+        </div>
+
+        <h2>Available Rooms</h2>
+        <ul id="roomsList">
+            {% for room in rooms %}
+            <li class="room-item">
+                <strong>Room ID:</strong> {{ room.room_id }}<br>
+                <strong>Type:</strong> {{ room.room_type }}<br>
+                <strong>Price:</strong> {{ room.price }}<br>
+                <strong>Facilities:</strong> {{ room.facilities }}<br>
+                <form method="post" action="/book_room">
+                    <input type="hidden" name="room_id" value="{{ room.room_id }}">
+                    <label for="check_in_date">Check-in Date:</label>
+                    <input type="date" id="check_in_date" name="check_in_date" required><br>
+                    <label for="check_out_date">Check-out Date:</label>
+                    <input type="date" id="check_out_date" name="check_out_date" required><br>
+                    <button type="submit">Book</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="/tenant_dashboard">Cancel Booking</a>
+        <a href="/logout_tenant">Logout</a>
+    </div>
+
+    <script>
+        function filterRooms() {
+            const roomType = document.getElementById('roomType').value.toLowerCase();
+            const maxPrice = document.getElementById('maxPrice').value;
+            const facilities = document.getElementById('facilities').value.toLowerCase();
+            const rooms = document.getElementsByClassName('room-item');
+
+            for (let room of rooms) {
+                let type = room.innerHTML.split('Type:</strong> ')[1].split('<br>')[0].toLowerCase();
+                let price = parseFloat(room.innerHTML.split('Price:</strong> ')[1].split('<br>')[0].replace(/[^0-9.]/g, ''));
+                let roomFacilities = room.innerHTML.split('Facilities:</strong> ')[1].split('<br>')[0].toLowerCase();
+
+                let typeMatch = !roomType || type.includes(roomType);
+                let priceMatch = !maxPrice || price <= parseFloat(maxPrice);
+                let facilitiesMatch = !facilities || roomFacilities.includes(facilities);
+
+                if (typeMatch && priceMatch && facilitiesMatch) {
+                    room.classList.remove('hidden');
+                } else {
+                    room.classList.add('hidden');
+                }
+            }
+        }
+
+        // Set minimum dates to today for all date inputs
+        const today = new Date().toISOString().split('T')[0];
+        document.querySelectorAll('input[type="date"]').forEach(input => {
+            input.min = today;
+        });
+
+        // Validate check-in and check-out dates
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                const checkIn = this.querySelector('[name="check_in_date"]');
+                const checkOut = this.querySelector('[name="check_out_date"]');
+                
+                if (checkIn.value >= checkOut.value) {
+                    e.preventDefault();
+                    alert('Check-out date must be after check-in date');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

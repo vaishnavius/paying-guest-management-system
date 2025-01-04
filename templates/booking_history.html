@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking History</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://cdn.britannica.com/82/156482-131-AEEBFEFC/New-York-York.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+    
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background for better readability */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    
+        h1 {
+            color: #222;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        th {
+            background-color: #444;
+            color: #fff;
+            text-transform: uppercase;
+        }
+    
+        tr {
+            transition: background-color 0.3s;
+        }
+    
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+    
+        td {
+            font-size: 1em;
+        }
+    
+        .status-change {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-weight: bold;
+        }
+    
+        .arrow {
+            color: #666;
+            font-size: 1.2em;
+        }
+    
+        /* Add a smooth scroll effect for better navigation experience */
+        html {
+            scroll-behavior: smooth;
+        }
+    
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+    
+            table {
+                font-size: 0.9em;
+            }
+    
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>    
+</head>
+<body>
+    <div class="container">
+        <h1>Booking History</h1>
+        
+        {% if bookings %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Room ID</th>
+                    <th>Tenant ID</th>
+                    <th>Action Type</th>
+                    <th>Action Date</th>
+                    <th>Status Change</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.booking_id }}</td>
+                    <td>{{ booking.room_id }}</td>
+                    <td>{{ booking.tenant_id }}</td>
+                    <td>{{ booking.action_type }}</td>
+                    <td>{{ booking.action_date }}</td>
+                    <td class="status-change">
+                        {{ booking.old_status }}
+                        <span class="arrow">→</span>
+                        {{ booking.new_status }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No booking history found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Bookings</title>
+    <style>
+         /* Existing styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://cdn.britannica.com/82/156482-131-AEEBFEFC/New-York-York.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            color: black;
+        }
+        h2 {
+            text-align: center;
+            color: #444;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: inline;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Your Bookings</h2>
+        <ul>
+            {% for booking in bookings %}
+            <li>
+                <strong>Room ID:</strong> {{ booking.room_id }}<br>
+                <strong>Check-in:</strong> {{ booking.check_in_date }}<br>
+                <strong>Check-out:</strong> {{ booking.check_out_date }}<br>
+                <form method="post" action="/cancel_booking">
+                    <input type="hidden" name="booking_id" value="{{ booking.booking_id }}">
+                    <button type="submit">Cancel Booking</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
