@@ -32,13 +32,12 @@ OS Compatibility: Windows 10/11, Linux (Ubuntu), macOS
 
 📂 Folder Structure
 
-.
-- ├── database/              # SQL scripts or schema design
-- ├── frontend/              # HTML and CSS files
-- ├── backend/               # Python backend logic
-- ├── static/                # Images, CSS, and JS assets
-- ├── templates/             # HTML templates (Jinja2 if Flask is used)
-- └── README.md              # Project overview and documentation
+ `├── database/` – SQL scripts or schema design  
+ `├── frontend/` – HTML and CSS files  
+ `├── backend/` – Python backend logic  
+ `├── static/` – Images, CSS, and JS assets  
+ `├── templates/` – HTML templates (Jinja2 if Flask is used)  
+ `└── README.md` – Project overview and documentation  
 
 🚀 How to Run the Project
 
@@ -46,7 +45,7 @@ OS Compatibility: Windows 10/11, Linux (Ubuntu), macOS
    ```bash
    git clone https://github.com/vaishnavius/paying-guest-management-system.git
    cd paying-guest-management-system
-2.Set up PostgreSQL database using provided schema
-3.Configure environment variables (if any)
-4.Run the backend server
-5.Access the frontend via the browser
+2. Set up PostgreSQL database using provided schema
+3. Configure environment variables (if any)
+4. Run the backend server
+5. Access the frontend via the browser
