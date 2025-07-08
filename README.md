@@ -24,11 +24,11 @@ The system ensures a smooth workflow by connecting tenants and owners through a 
 
 🧰 Tech Stack
 
-Frontend: HTML, CSS
-Backend: Python
-Database: PostgreSQL (pgAdmin 4 v8.14)
-IDE: VS Code, PyCharm
-OS Compatibility: Windows 10/11, Linux (Ubuntu), macOS
+- Frontend: HTML, CSS
+- Backend: Python
+- Database: PostgreSQL (pgAdmin 4 v8.14)
+- IDE: VS Code, PyCharm
+- OS Compatibility: Windows 10/11, Linux (Ubuntu), macOS
 
 📂 Folder Structure
 
