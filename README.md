@@ -1,10 +1,10 @@
 Project Overview
 This project aims to revolutionize the PG room management process by introducing a centralized platform for:
 
->Tenant Management
->Room Booking & Availability Tracking
->Owner & Property Administration
->Multi-location PG Management
+- Tenant Management
+- Room Booking & Availability Tracking
+- Owner & Property Administration
+- Multi-location PG Management
 
 The system ensures a smooth workflow by connecting tenants and owners through a secure and user-friendly interface. It leverages a relational database model to maintain data consistency, integrity, and efficient retrieval.
 
@@ -33,12 +33,12 @@ OS Compatibility: Windows 10/11, Linux (Ubuntu), macOS
 📂 Folder Structure
 
 .
-├── database/              # SQL scripts or schema design
-├── frontend/              # HTML and CSS files
-├── backend/               # Python backend logic
-├── static/                # Images, CSS, and JS assets
-├── templates/             # HTML templates (Jinja2 if Flask is used)
-└── README.md              # Project overview and documentation
+- ├── database/              # SQL scripts or schema design
+- ├── frontend/              # HTML and CSS files
+- ├── backend/               # Python backend logic
+- ├── static/                # Images, CSS, and JS assets
+- ├── templates/             # HTML templates (Jinja2 if Flask is used)
+- └── README.md              # Project overview and documentation
 
 🚀 How to Run the Project
 
