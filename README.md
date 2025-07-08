@@ -42,9 +42,10 @@ OS Compatibility: Windows 10/11, Linux (Ubuntu), macOS
 
 🚀 How to Run the Project
 
-1.Clone the repository
-git clone https://github.com/vaishnavius/paying-guest-management-system.git
-cd paying-guest-management-system
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/vaishnavius/paying-guest-management-system.git
+   cd paying-guest-management-system
 2.Set up PostgreSQL database using provided schema
 3.Configure environment variables (if any)
 4.Run the backend server
